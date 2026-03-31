@@ -1,65 +1,597 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Image from "next/image";
+import Link from "next/link";
+import { mangoes, buildGenericWhatsAppUrl, buildWhatsAppUrl } from "./lib/mangoes";
+import {
+  imgAlphonso1,
+  imgBanganapalli1,
+  imgKesar1,
+  imgPremiumMangoes,
+  imgPremiumAlphonsoMangoes,
+} from "./lib/images";
+
+function WhatsAppIcon({ size = 18 }: { size?: number }) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.49" />
+    </svg>
+  );
+}
+
+const featuredVarieties = [
+  {
+    name: "Alphonso",
+    origin: "Ratnagiri",
+    image: imgAlphonso1,
+    description:
+      "The king of mangoes. Known for its rich, creamy, tender texture and delicate, non-fibrous, juicy pulp.",
+    badge: "PREMIUM",
+    badgeColor: "#BCF0AE",
+    badgeTextColor: "#1a4d2e",
+    mango: mangoes.find((m) => m.slug === "alphonso")!,
+  },
+  {
+    name: "Kesar",
+    origin: "Junagadh",
+    image: imgKesar1,
+    description:
+      "The 'Queen of Mangoes'. Characterized by its golden saffron glow and intense, intoxicating aroma.",
+    badge: "SWEETEST",
+    badgeColor: "#FFDEA1",
+    badgeTextColor: "#7a5900",
+    mango: mangoes.find((m) => m.slug === "kesar")!,
+  },
+  {
+    name: "Banganapalli",
+    origin: "Andhra Pradesh",
+    image: imgBanganapalli1,
+    description:
+      "Large sized, uniquely oblong shape with a pleasantly sweet taste and firm, fibre-free flesh.",
+    badge: "VERSATILE",
+    badgeColor: "#E9E8E7",
+    badgeTextColor: "#3c3b3a",
+    mango: mangoes.find((m) => m.slug === "banganapalli")!,
+  },
+];
+
+const trustItems = [
+  {
+    icon: "🌿",
+    iconBg: "rgba(59, 105, 52, 0.14)",
+    label: "100% Natural",
+    desc: "No artificial ripening agents used.",
+  },
+  {
+    icon: "✋",
+    iconBg: "rgba(255, 190, 0, 0.2)",
+    label: "Hand Picked",
+    desc: "Selected individually for perfection.",
+  },
+  {
+    icon: "✅",
+    iconBg: "rgba(59, 105, 52, 0.14)",
+    label: "Trusted by Thousands",
+    desc: "Serving happy mango lovers since 2016.",
+  },
+];
+
+const reviews = [
+  {
+    name: "Ananya Sharma",
+    stars: 5,
+    text: "The Alphonso mangoes were absolutely heavenly. Reminded me of my childhood summers in Ratnagiri.",
+    initial: "A",
+  },
+  {
+    name: "Vikram Mehta",
+    stars: 5,
+    text: "Prompt delivery and impeccable quality. The Kesar mangoes were incredibly aromatic and sweet.",
+    initial: "V",
+  },
+  {
+    name: "Priya Iyer",
+    stars: 5,
+    text: "Best place to order mangoes online. The packaging was eco-friendly and kept the fruit perfect.",
+    initial: "P",
+  },
+];
+
+export default function HomePage() {
+  return (
+    <main style={{ paddingTop: "72px" }}>
+
+      {/* ===== HERO — DESKTOP ===== */}
+      <section
+        className="hero-desktop"
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          minHeight: "calc(100svh - 72px)",
+          display: "flex",
+          alignItems: "center",
+          background: "var(--surface-container-low)",
+        }}
+      >
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src={imgPremiumMangoes}
+          alt="Premium Mangoes"
+          fill
+          style={{ objectFit: "cover", zIndex: 0 }}
           priority
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        {/* White-to-transparent overlay — text side is light, image shows through on right */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(to right, rgba(244,243,242,0.97) 0%, rgba(244,243,242,0.88) 35%, rgba(244,243,242,0.40) 60%, rgba(244,243,242,0) 100%)",
+            zIndex: 1,
+          }}
+        />
+        <div
+          className="container"
+          style={{ position: "relative", zIndex: 2, paddingTop: "60px", paddingBottom: "60px" }}
+        >
+          <div style={{ maxWidth: "580px" }}>
+            <div className="badge" style={{ marginBottom: "28px" }}>
+              <span>🌿</span>
+              <span>SEASON 2024 NOW OPEN</span>
+            </div>
+            <h1
+              style={{
+                fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+                fontWeight: 800,
+                color: "var(--on-surface)",
+                lineHeight: 1.1,
+                marginBottom: "24px",
+                letterSpacing: "-0.04em",
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              India&apos;s Finest{" "}
+              <span style={{ color: "var(--primary)" }}>Mangoes</span>,{" "}
+              Delivered Fresh
+            </h1>
+            <p
+              style={{
+                fontSize: "1.05rem",
+                color: "var(--on-surface-variant)",
+                lineHeight: 1.8,
+                marginBottom: "36px",
+                maxWidth: "460px",
+              }}
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Experience the sun-drenched sweetness of authentic Ratnagiri
+              Alphonso and Junagadh Kesar, hand-picked and delivered within 48
+              hours.
+            </p>
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+              <a
+                href={buildGenericWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                style={{ fontSize: "1rem", padding: "14px 32px" }}
+              >
+                <WhatsAppIcon size={18} />
+                Order Now on WhatsApp
+              </a>
+              <Link
+                href="/varieties"
+                className="btn-outline"
+                style={{
+                  fontSize: "1rem",
+                  padding: "14px 28px",
+                  color: "var(--on-surface)",
+                  borderColor: "var(--surface-container)",
+                }}
+              >
+                View Varieties
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </section>
+
+      {/* ===== HERO — MOBILE ===== */}
+      <section
+        className="hero-mobile"
+        style={{
+          background: "var(--surface-container-low)",
+          padding: "40px 24px 36px",
+          textAlign: "center",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "2rem",
+            fontWeight: 800,
+            color: "var(--on-surface)",
+            lineHeight: 1.2,
+            marginBottom: "28px",
+            letterSpacing: "-0.03em",
+          }}
+        >
+          India&apos;s Finest Mangoes,{" "}
+          Delivered Fresh
+        </h1>
+        <div style={{ margin: "0 auto 28px", maxWidth: "300px" }}>
+          <Image
+            src={imgPremiumAlphonsoMangoes}
+            alt="Premium Alphonso Mangoes"
+            width={300}
+            height={240}
+            style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            priority
+          />
+        </div>
+        <a
+          href={buildGenericWhatsAppUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            background: "var(--inverse-surface)",
+            color: "#ffffff",
+            borderRadius: "9999px",
+            padding: "14px 24px",
+            fontSize: "0.95rem",
+            fontWeight: 700,
+            textDecoration: "none",
+            width: "100%",
+          }}
+        >
+          <WhatsAppIcon size={18} />
+          Order Now on WhatsApp
+        </a>
+      </section>
+
+      {/* ===== TRUST SECTION ===== */}
+      <section className="section" style={{ background: "var(--surface-container-lowest)" }}>
+        <div className="container">
+
+          {/* Desktop layout: heading left + badge chips right */}
+          <div className="trust-desktop">
+            <div style={{ flex: "1 1 280px" }}>
+              <h2
+                style={{
+                  fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)",
+                  fontWeight: 800,
+                  color: "var(--primary)",
+                  letterSpacing: "-0.03em",
+                  marginBottom: "12px",
+                }}
+              >
+                8 Years of Delivering Freshness
+              </h2>
+              <p
+                style={{
+                  fontSize: "1rem",
+                  color: "var(--on-surface-variant)",
+                  maxWidth: "380px",
+                  lineHeight: 1.75,
+                }}
+              >
+                Our unwavering commitment to quality and authenticity has earned
+                the trust of thousands of families across India.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+              {trustItems.map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    background: "var(--surface-container-low)",
+                    borderRadius: "1.5rem",
+                    padding: "16px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    boxShadow: "0 2px 8px rgba(26,28,28,0.05)",
+                  }}
+                >
+                  <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{item.icon}</span>
+                  <span
+                    style={{
+                      fontSize: "0.75rem",
+                      fontWeight: 800,
+                      color: "var(--primary)",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile layout: centered heading + vertical list */}
+          <div className="trust-mobile">
+            <h2
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: 800,
+                color: "var(--on-surface)",
+                letterSpacing: "-0.03em",
+                textAlign: "center",
+                marginBottom: "8px",
+              }}
+            >
+              8 Years of Delivering Freshness
+            </h2>
+            <div
+              style={{
+                width: "44px",
+                height: "3px",
+                background: "var(--secondary-container)",
+                borderRadius: "2px",
+                margin: "0 auto 28px",
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {trustItems.map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "16px",
+                    background: "var(--surface-container-low)",
+                    borderRadius: "1.5rem",
+                    padding: "16px 20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "44px",
+                      height: "44px",
+                      background: item.iconBg,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.3rem",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        fontSize: "0.95rem",
+                        color: "var(--on-surface)",
+                        marginBottom: "2px",
+                      }}
+                    >
+                      {item.label}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "0.82rem",
+                        color: "var(--on-surface-variant)",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {item.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ===== VARIETIES SECTION ===== */}
+      <section className="section" style={{ background: "var(--surface-container-low)" }}>
+        <div className="container">
+          <div style={{ marginBottom: "48px" }}>
+            <div
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 800,
+                color: "var(--primary)",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                marginBottom: "12px",
+              }}
+            >
+              THE COLLECTION
+            </div>
+            <h2
+              style={{
+                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                fontWeight: 800,
+                color: "var(--on-surface)",
+                letterSpacing: "-0.03em",
+                marginBottom: "12px",
+              }}
+            >
+              Our Curated Varieties
+            </h2>
+            <p
+              style={{
+                fontSize: "1rem",
+                color: "var(--on-surface-variant)",
+                maxWidth: "480px",
+                lineHeight: 1.75,
+              }}
+            >
+              Each variety is a unique testament to India&apos;s diverse climate
+              and soil.
+            </p>
+          </div>
+
+          <div className="grid-3">
+            {featuredVarieties.map((variety) => (
+              <div key={variety.name} className="mango-card">
+                <div className="img-wrap">
+                  <Image
+                    src={variety.image}
+                    alt={variety.name}
+                    width={400}
+                    height={220}
+                    style={{ width: "100%", height: "220px", objectFit: "cover" }}
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                  />
+                </div>
+                <div className="info">
+                  <div className="variety-tag">{variety.origin}</div>
+                  <h3
+                    style={{
+                      fontSize: "1.25rem",
+                      fontWeight: 700,
+                      marginBottom: "10px",
+                      color: "var(--on-surface)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {variety.name}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: "0.87rem",
+                      color: "var(--on-surface-variant)",
+                      lineHeight: 1.7,
+                      marginBottom: "20px",
+                    }}
+                  >
+                    {variety.description}
+                  </p>
+
+                  {variety.mango && (
+                    <a
+                      href={buildWhatsAppUrl(variety.mango)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        background: "var(--inverse-surface)",
+                        color: "#ffffff",
+                        borderRadius: "9999px",
+                        padding: "11px 20px",
+                        fontSize: "0.88rem",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                        width: "100%",
+                        letterSpacing: "0.01em",
+                      }}
+                    >
+                      <WhatsAppIcon size={16} />
+                      Order on WhatsApp
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== REVIEWS SECTION ===== */}
+      <section className="section" style={{ background: "var(--surface-container-lowest)" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <h2
+              style={{
+                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                fontWeight: 800,
+                color: "var(--on-surface)",
+                letterSpacing: "-0.03em",
+                marginBottom: "12px",
+              }}
+            >
+              Voices of Satisfaction
+            </h2>
+            <p style={{ fontSize: "1rem", color: "var(--on-surface-variant)", lineHeight: 1.75 }}>
+              Join our community of fruit connoisseurs
+            </p>
+          </div>
+
+          <div className="grid-3">
+            {reviews.map((review) => (
+              <div key={review.name} className="review-card">
+                <div className="stars">{"★".repeat(review.stars)}</div>
+                <p
+                  style={{
+                    fontSize: "0.9rem",
+                    color: "var(--on-surface-variant)",
+                    lineHeight: 1.75,
+                    margin: "14px 0 20px",
+                  }}
+                >
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div
+                    style={{
+                      width: "44px",
+                      height: "44px",
+                      borderRadius: "50%",
+                      background: "var(--primary-container)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1rem",
+                      fontWeight: 800,
+                      color: "var(--on-primary-container)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {review.initial}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontWeight: 700,
+                        fontSize: "0.9rem",
+                        color: "var(--on-surface)",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {review.name}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        /* ── Desktop defaults ───────────────────────────────────────── */
+        .hero-desktop    { display: flex; }
+        .hero-mobile     { display: none; }
+        .trust-desktop   { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+        .trust-mobile    { display: none; }
+        /* ── Mobile overrides (≤ 640px) ─────────────────────────────── */
+        @media (max-width: 640px) {
+          .hero-desktop  { display: none !important; }
+          .hero-mobile   { display: block; }
+
+          .trust-desktop { display: none !important; }
+          .trust-mobile  { display: block; }
+
+          /* Stack the 3-col grids to 1 column */
+          .grid-3 {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+    </main>
   );
 }
