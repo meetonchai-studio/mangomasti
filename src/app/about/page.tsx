@@ -9,39 +9,13 @@ import {
   imgFarmerCheckingFruit,
   imgBoxesOfMangoes,
 } from "../lib/images";
+import { getAboutContent } from "../actions/about";
 
 export const metadata: Metadata = {
   title: "About Us | MangoMasti — Our Story & Heritage",
   description:
     "Learn the story behind MangoMasti — nearly a decade of sourcing India's finest mangoes from Ratnagiri, Devgad, and Andhra Pradesh, delivered fresh to your door.",
 };
-
-const pillars = [
-  {
-    icon: "🏆",
-    bg: "rgba(255, 190, 0, 0.22)",
-    title: "Quality",
-    desc: "Hand-inspected for blemishes, size, and Brix levels to ensure only the elite fruits reach you.",
-  },
-  {
-    icon: "🌿",
-    bg: "rgba(59, 105, 52, 0.18)",
-    title: "Freshness",
-    desc: "Our logistics chain is optimized for speed, preserving the orchard-fresh scent in every delivery.",
-  },
-  {
-    icon: "✅",
-    bg: "rgba(144, 77, 0, 0.18)",
-    title: "Trust",
-    desc: "Transparent sourcing and ethical practices with local Indian farmer communities.",
-  },
-  {
-    icon: "🤝",
-    bg: "rgba(122, 89, 0, 0.10)",
-    title: "Customer First",
-    desc: "We don't just sell mangoes; we build relationships. Your satisfaction is our heritage.",
-  },
-];
 
 function WhatsAppIcon() {
   return (
@@ -51,7 +25,9 @@ function WhatsAppIcon() {
   );
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const content = await getAboutContent();
+
   return (
     <main style={{ paddingTop: "72px" }}>
 
@@ -71,7 +47,7 @@ export default function AboutPage() {
                   marginBottom: "20px",
                 }}
               >
-                Est. 2016 — 8 Years of Excellence
+                {content.heroBadge}
               </p>
               <h1
                 style={{
@@ -83,9 +59,9 @@ export default function AboutPage() {
                   marginBottom: "24px",
                 }}
               >
-                The Soul of India&apos;s{" "}
+                {content.heroHeading.split("'s")[0]}&apos;s{" "}
                 <span style={{ color: "var(--primary)", display: "block" }}>
-                  Golden Orchards.
+                  {content.heroHeading.split("'s")[1]}
                 </span>
               </h1>
               <p
@@ -96,9 +72,7 @@ export default function AboutPage() {
                   maxWidth: "460px",
                 }}
               >
-                We aren&apos;t just selling fruit; we&apos;re delivering a sun-drenched heritage.
-                For nearly a decade, we have scoured the heart of India to source the most
-                exquisite mangoes for the global palate.
+                {content.heroDescription}
               </p>
             </div>
 
@@ -152,7 +126,7 @@ export default function AboutPage() {
                   marginBottom: "8px",
                 }}
               >
-                Who We Are
+                {content.whoHeading}
               </h2>
               <div
                 style={{
@@ -168,24 +142,10 @@ export default function AboutPage() {
                   fontSize: "0.97rem",
                   color: "var(--on-surface-variant)",
                   lineHeight: 1.8,
-                  marginBottom: "16px",
+                  whiteSpace: "pre-line",
                 }}
               >
-                Mango Masti was born from a singular obsession: the perfect mango. Unlike
-                typical growers who focus on a single plot of land, we act as{" "}
-                <strong style={{ color: "var(--on-surface)" }}>curators and master retailers</strong>.
-              </p>
-              <p
-                style={{
-                  fontSize: "0.97rem",
-                  color: "var(--on-surface-variant)",
-                  lineHeight: 1.8,
-                }}
-              >
-                We spend our seasons traveling through Ratnagiri, Devgad, and the lush groves
-                of Andhra Pradesh. We don&apos;t grow mangoes; we source them from the most
-                respected farmers who share our uncompromising standards for ripeness, texture,
-                and fragrance.
+                {content.whoDescription}
               </p>
             </div>
 
@@ -369,7 +329,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid-4">
-            {pillars.map((pillar) => (
+            {content.pillars.map((pillar) => (
               <div
                 key={pillar.title}
                 style={{
@@ -461,7 +421,7 @@ export default function AboutPage() {
                   marginBottom: "14px",
                 }}
               >
-                Have questions? Chat with us.
+                {content.ctaHeading}
               </h2>
               <p
                 style={{
@@ -472,7 +432,7 @@ export default function AboutPage() {
                   lineHeight: 1.75,
                 }}
               >
-                Whether it&apos;s about bulk orders or variety selection, we&apos;re here to help.
+                {content.ctaDescription}
               </p>
               <a
                 href={buildGenericWhatsAppUrl()}
