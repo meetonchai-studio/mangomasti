@@ -25,26 +25,6 @@ function IconLeaf() {
   );
 }
 
-function IconGallery() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2"/>
-      <circle cx="8.5" cy="8.5" r="1.5"/>
-      <polyline points="21 15 16 10 5 21"/>
-    </svg>
-  );
-}
-
-function IconBox() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-      <line x1="12" y1="22.08" x2="12" y2="12"/>
-    </svg>
-  );
-}
-
 function IconStar() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -66,8 +46,6 @@ function IconInfo() {
 const navLinks = [
   { href: "/", label: "Home", Icon: IconHome },
   { href: "/varieties", label: "Our Mangoes", Icon: IconLeaf },
-  { href: "/gallery", label: "Gallery", Icon: IconGallery },
-  { href: "/related-products", label: "Mango Related Products", Icon: IconBox },
   { href: "/reviews", label: "Reviews", Icon: IconStar },
   { href: "/about", label: "About Us", Icon: IconInfo },
 ];

@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { imgLogo } from "./lib/images";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import WhatsAppFloat from "./components/WhatsAppFloat";
+import ConditionalNav from "./components/ConditionalNav";
+import ConditionalFooter from "./components/ConditionalFooter";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",
@@ -43,10 +42,9 @@ export default function RootLayout({
         <meta name="color-scheme" content="light" />
       </head>
       <body>
-        <Navbar />
+        <ConditionalNav />
         {children}
-        <Footer />
-        <WhatsAppFloat />
+        <ConditionalFooter />
       </body>
     </html>
   );
