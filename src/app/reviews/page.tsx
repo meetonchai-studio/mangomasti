@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getApprovedReviews } from "../actions/reviews";
 import ReviewForm from "./ReviewForm";
+import ReviewCard from "./ReviewCard";
 
 export const metadata: Metadata = {
   title: "Customer Reviews | MangoMasti — What Our Customers Say",
@@ -8,36 +9,11 @@ export const metadata: Metadata = {
     "Read genuine reviews from MangoMasti customers. See why thousands of families trust us for premium, chemical-free Indian mangoes every season.",
 };
 
-// ─── Static seed reviews ──────────────────────────────────────────────────────
-
-const staticReviews = [
-  {
-    id: "s1",
-    name: "Priya Sharma",
-    location: "Hyderabad, Telangana",
-    createdAt: new Date("2024-06-15"),
-    variety: "Alphonso",
-    rating: 5,
-    title: "Life-Changing Mangoes!",
-    body: "I've been eating mangoes my entire life, but MangoMasti's Alphonso variety completely changed my understanding of what a mango can taste like. The aroma when I opened the box was incredible. This is now a non-negotiable part of every summer for my family.",
-  },
-  {
-    id: "s2",
-    name: "Rajesh Kumar",
-    location: "Bangalore, Karnataka",
-    createdAt: new Date("2024-05-20"),
-    variety: "Imam Pasand",
-    rating: 5,
-    title: "Tried Imam Pasand for the First Time — Mind Blown",
-    body: "I had never heard of Imam Pasand before a friend recommended MangoMasti. Ordered a box on WhatsApp and it arrived next day — fresh, perfectly packed. The flavor is unlike anything I've had. Velvety smooth, no fiber.",
-  },
-];
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function ReviewsPage() {
   const { data: dbReviews, error } = await getApprovedReviews();
-  const allReviews = [...(dbReviews || []), ...staticReviews];
+  const allReviews = dbReviews || [];
 
   return (
     <main style={{ paddingTop: "72px", background: "var(--surface-container-low)", minHeight: "100vh" }}>
@@ -199,18 +175,53 @@ export default async function ReviewsPage() {
               </div>
             )}
 
-            {/* Reviews grid */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                gap: "20px",
-              }}
-            >
-              {allReviews.map((review: any) => (
-                <ReviewCard key={review.id} review={review} />
-              ))}
-            </div>
+            {/* Reviews grid - Bento style */}
+            {allReviews.length === 0 ? (
+              <div
+                style={{
+                  background: "var(--surface-container-lowest)",
+                  borderRadius: "2rem",
+                  padding: "60px 32px",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: "3rem", marginBottom: "16px" }}>💬</div>
+                <h3
+                  style={{
+                    fontSize: "1.2rem",
+                    fontWeight: 700,
+                    color: "var(--on-surface)",
+                    marginBottom: "8px",
+                    fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
+                  }}
+                >
+                  No reviews yet
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.95rem",
+                    color: "var(--on-surface-variant)",
+                    fontFamily: "var(--font-vietnam, 'Be Vietnam Pro'), sans-serif",
+                  }}
+                >
+                  Be the first to share your experience!
+                </p>
+              </div>
+            ) : (
+              <div
+                className="bento-grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                  gridAutoRows: "auto",
+                  gap: "20px",
+                }}
+              >
+                {allReviews.map((review: any) => (
+                  <ReviewCard key={review.id} review={review} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -226,148 +237,5 @@ export default async function ReviewsPage() {
         }
       `}</style>
     </main>
-  );
-}
-
-// ─── Review card sub-component ────────────────────────────────────────────────
-
-function ReviewCard({ review }: { review: any }) {
-  const initial = review.name?.charAt(0)?.toUpperCase() || "U";
-  const dateStr = new Date(review.createdAt).toLocaleDateString("en-IN", {
-    month: "long",
-    year: "numeric",
-  });
-
-  return (
-    <article className="review-card">
-      {/* Top row: stars + variety badge */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          marginBottom: "14px",
-        }}
-      >
-        <div
-          className="stars"
-          aria-label={`${review.rating} out of 5 stars`}
-        >
-          {"★".repeat(review.rating)}
-          {"☆".repeat(Math.max(0, 5 - review.rating))}
-        </div>
-        {review.variety && (
-          <span
-            style={{
-              background: "rgba(122, 89, 0, 0.08)",
-              color: "var(--primary)",
-              borderRadius: "9999px",
-              padding: "3px 10px",
-              fontSize: "0.68rem",
-              fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.06em",
-              flexShrink: 0,
-            }}
-          >
-            🥭 {review.variety}
-          </span>
-        )}
-      </div>
-
-      {/* Review title */}
-      <h3
-        style={{
-          fontSize: "1.05rem",
-          fontWeight: 700,
-          marginBottom: "10px",
-          color: "var(--on-surface)",
-          letterSpacing: "-0.02em",
-          fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
-        }}
-      >
-        {review.title}
-      </h3>
-
-      {/* Review body */}
-      <p
-        style={{
-          fontSize: "0.88rem",
-          color: "var(--on-surface-variant)",
-          lineHeight: 1.75,
-          marginBottom: "20px",
-          fontFamily: "var(--font-vietnam, 'Be Vietnam Pro'), sans-serif",
-        }}
-      >
-        &ldquo;{review.body}&rdquo;
-      </p>
-
-      {/* Author row */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingTop: "16px",
-          borderTop: "1px solid var(--surface-container)",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          {/* Avatar */}
-          <div
-            style={{
-              width: "38px",
-              height: "38px",
-              borderRadius: "50%",
-              background: "var(--primary-container)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "0.9rem",
-              fontWeight: 800,
-              color: "var(--on-primary-container)",
-              flexShrink: 0,
-              fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
-            }}
-            aria-hidden="true"
-          >
-            {initial}
-          </div>
-          <div>
-            <div
-              style={{
-                fontWeight: 700,
-                fontSize: "0.88rem",
-                fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
-                color: "var(--on-surface)",
-              }}
-            >
-              {review.name}
-            </div>
-            <div
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--on-surface-variant)",
-                fontFamily: "var(--font-vietnam, 'Be Vietnam Pro'), sans-serif",
-              }}
-            >
-              {review.location}
-            </div>
-          </div>
-        </div>
-
-        {/* Date */}
-        <div
-          style={{
-            fontSize: "0.72rem",
-            color: "var(--on-surface-variant)",
-            fontFamily: "var(--font-vietnam, 'Be Vietnam Pro'), sans-serif",
-          }}
-        >
-          {dateStr}
-        </div>
-      </div>
-    </article>
   );
 }
