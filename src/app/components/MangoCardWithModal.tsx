@@ -163,7 +163,7 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
                 padding: "12px 16px",
                 borderRadius: "12px",
                 border: "none",
-                background: "#25D366",
+                background: "var(--primary)",
                 color: "#ffffff",
                 fontSize: "0.9rem",
                 fontWeight: 600,
@@ -175,11 +175,11 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
                 transition: "all 0.2s ease",
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.background = "#20BA5A";
+                e.currentTarget.style.background = "#E07C00";
                 e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.background = "#25D366";
+                e.currentTarget.style.background = "var(--primary)";
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >

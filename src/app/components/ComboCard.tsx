@@ -7,59 +7,60 @@ interface ComboCardProps {
   allMangoes: Mango[];
 }
 
-interface ComboSelection {
+interface MangoSelection {
   mangoId: number;
   mangoName: string;
-  quantity: number;
 }
+
+const COMBO_SIZES = [
+  { value: 1, label: "1 kg Combo", price: "Best for trying" },
+  { value: 2, label: "2 kg Combo", price: "Popular choice" },
+  { value: 5, label: "5 kg Combo", price: "Best value" },
+];
 
 export default function ComboCard({ allMangoes }: ComboCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selections, setSelections] = useState<ComboSelection[]>([]);
+  const [selectedComboSize, setSelectedComboSize] = useState<number | null>(null);
+  const [selectedMangoes, setSelectedMangoes] = useState<MangoSelection[]>([]);
 
-  const handleQuantityChange = (mango: Mango, quantity: number) => {
-    const existing = selections.find((s) => s.mangoId === mango.id);
+  const toggleMangoSelection = (mango: Mango) => {
+    const isSelected = selectedMangoes.some((m) => m.mangoId === mango.id);
 
-    if (quantity <= 0) {
-      // Remove from selections
-      setSelections(selections.filter((s) => s.mangoId !== mango.id));
-    } else if (existing) {
-      // Update quantity
-      setSelections(
-        selections.map((s) =>
-          s.mangoId === mango.id ? { ...s, quantity } : s
-        )
-      );
+    if (isSelected) {
+      setSelectedMangoes(selectedMangoes.filter((m) => m.mangoId !== mango.id));
     } else {
-      // Add new selection
-      setSelections([
-        ...selections,
-        { mangoId: mango.id, mangoName: mango.name, quantity },
-      ]);
+      setSelectedMangoes([...selectedMangoes, { mangoId: mango.id, mangoName: mango.name }]);
     }
   };
 
-  const getQuantity = (mangoId: number) => {
-    return selections.find((s) => s.mangoId === mangoId)?.quantity || 0;
+  const isMangoSelected = (mangoId: number) => {
+    return selectedMangoes.some((m) => m.mangoId === mangoId);
   };
 
-  const totalKgs = selections.reduce((sum, s) => sum + s.quantity, 0);
-
   const handleOrderCombo = () => {
-    if (selections.length === 0) {
+    if (!selectedComboSize) {
+      alert("Please select a combo size");
+      return;
+    }
+
+    if (selectedMangoes.length === 0) {
       alert("Please select at least one mango variety");
       return;
     }
 
-    const orderDetails = selections
-      .map((s) => `• ${s.mangoName}: ${s.quantity}kg`)
-      .join("\n");
+    const varietyList = selectedMangoes.map((m) => `• ${m.mangoName}`).join("\n");
+    const message = `Hi! I'd like to order a *${selectedComboSize}kg Mango Combo*:\n\n${varietyList}\n\n*Total: ${selectedComboSize}kg* (mixed varieties)`;
 
-    const message = `Hi! I'd like to order a *Mango Combo*:\n\n${orderDetails}\n\n*Total: ${totalKgs}kg*`;
     window.open(
       `https://wa.me/917977740596?text=${encodeURIComponent(message)}`,
       "_blank"
     );
+  };
+
+  const resetModal = () => {
+    setSelectedComboSize(null);
+    setSelectedMangoes([]);
+    setIsModalOpen(false);
   };
 
   return (
@@ -214,7 +215,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
             zIndex: 1000,
             padding: "20px",
           }}
-          onClick={() => setIsModalOpen(false)}
+          onClick={resetModal}
         >
           <div
             style={{
@@ -238,7 +239,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
               }}
             >
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={resetModal}
                 style={{
                   position: "absolute",
                   top: "20px",
@@ -277,108 +278,136 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
 
             {/* Modal Content */}
             <div style={{ padding: "28px" }}>
-              {/* Mango Selection List */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                  marginBottom: "24px",
-                }}
-              >
-                {allMangoes.map((mango) => {
-                  const quantity = getQuantity(mango.id);
-                  return (
-                    <div
-                      key={mango.id}
+              {/* Step 1: Combo Size Selection */}
+              <div style={{ marginBottom: "32px" }}>
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "#111827",
+                    marginBottom: "16px",
+                  }}
+                >
+                  Step 1: Choose Combo Size
+                </h3>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+                    gap: "12px",
+                  }}
+                >
+                  {COMBO_SIZES.map((combo) => (
+                    <button
+                      key={combo.value}
+                      onClick={() => setSelectedComboSize(combo.value)}
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "16px",
-                        background: quantity > 0 ? "#fff7ed" : "#f9fafb",
+                        padding: "20px 16px",
                         borderRadius: "12px",
-                        border: quantity > 0 ? "2px solid #FF6B35" : "1px solid #e5e7eb",
+                        border: selectedComboSize === combo.value ? "2px solid #FF6B35" : "1px solid #e5e7eb",
+                        background: selectedComboSize === combo.value ? "#fff7ed" : "#ffffff",
+                        cursor: "pointer",
                         transition: "all 0.2s ease",
+                        textAlign: "center",
                       }}
                     >
-                      <div style={{ flex: 1 }}>
-                        <div
-                          style={{
-                            fontSize: "1rem",
-                            fontWeight: 700,
-                            color: "#111827",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          {mango.name}
-                        </div>
-                        <div style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                          ₹{(mango.discountedPrice / 100).toFixed(2)}/kg
-                        </div>
-                      </div>
-
-                      {/* Quantity Controls */}
                       <div
+                        style={{
+                          fontSize: "1.5rem",
+                          fontWeight: 800,
+                          color: selectedComboSize === combo.value ? "#FF6B35" : "#111827",
+                          marginBottom: "4px",
+                        }}
+                      >
+                        {combo.value} kg
+                      </div>
+                      <div style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 600 }}>
+                        {combo.price}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Step 2: Mango Variety Selection */}
+              <div style={{ marginBottom: "24px", opacity: selectedComboSize ? 1 : 0.5 }}>
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "#111827",
+                    marginBottom: "16px",
+                  }}
+                >
+                  Step 2: Select Mango Varieties
+                </h3>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  {allMangoes.map((mango) => {
+                    const isSelected = isMangoSelected(mango.id);
+                    return (
+                      <button
+                        key={mango.id}
+                        onClick={() => selectedComboSize && toggleMangoSelection(mango)}
+                        disabled={!selectedComboSize}
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "12px",
+                          justifyContent: "space-between",
+                          padding: "14px 16px",
+                          background: isSelected ? "#fff7ed" : "#f9fafb",
+                          borderRadius: "12px",
+                          border: isSelected ? "2px solid #FF6B35" : "1px solid #e5e7eb",
+                          cursor: selectedComboSize ? "pointer" : "not-allowed",
+                          transition: "all 0.2s ease",
+                          textAlign: "left",
                         }}
                       >
-                        <button
-                          onClick={() => handleQuantityChange(mango, quantity - 1)}
-                          disabled={quantity === 0}
-                          style={{
-                            width: "36px",
-                            height: "36px",
-                            borderRadius: "8px",
-                            border: "1px solid #e5e7eb",
-                            background: "#ffffff",
-                            color: "#374151",
-                            fontSize: "1.2rem",
-                            cursor: quantity === 0 ? "not-allowed" : "pointer",
-                            opacity: quantity === 0 ? 0.5 : 1,
-                            fontWeight: 700,
-                          }}
-                        >
-                          −
-                        </button>
+                        <div style={{ flex: 1 }}>
+                          <div
+                            style={{
+                              fontSize: "0.95rem",
+                              fontWeight: 700,
+                              color: "#111827",
+                              marginBottom: "2px",
+                            }}
+                          >
+                            {mango.name}
+                          </div>
+                          <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+                            ₹{(mango.discountedPrice / 100).toFixed(2)}/kg
+                          </div>
+                        </div>
                         <div
                           style={{
-                            width: "60px",
-                            textAlign: "center",
-                            fontSize: "1.1rem",
-                            fontWeight: 700,
-                            color: "#111827",
-                          }}
-                        >
-                          {quantity} kg
-                        </div>
-                        <button
-                          onClick={() => handleQuantityChange(mango, quantity + 1)}
-                          style={{
-                            width: "36px",
-                            height: "36px",
-                            borderRadius: "8px",
-                            border: "1px solid #FF6B35",
-                            background: "#FF6B35",
+                            width: "24px",
+                            height: "24px",
+                            borderRadius: "50%",
+                            border: isSelected ? "2px solid #FF6B35" : "2px solid #d1d5db",
+                            background: isSelected ? "#FF6B35" : "#ffffff",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                             color: "#ffffff",
-                            fontSize: "1.2rem",
-                            cursor: "pointer",
+                            fontSize: "0.9rem",
                             fontWeight: 700,
                           }}
                         >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
+                          {isSelected && "✓"}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Summary */}
-              {selections.length > 0 && (
+              {selectedComboSize && selectedMangoes.length > 0 && (
                 <div
                   style={{
                     background: "#f9fafb",
@@ -395,37 +424,28 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                       marginBottom: "12px",
                     }}
                   >
-                    YOUR SELECTION
+                    YOUR COMBO
                   </div>
-                  {selections.map((s) => (
-                    <div
-                      key={s.mangoId}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        fontSize: "0.95rem",
-                        color: "#374151",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      <span>{s.mangoName}</span>
-                      <span style={{ fontWeight: 600 }}>{s.quantity} kg</span>
-                    </div>
-                  ))}
                   <div
                     style={{
-                      borderTop: "2px solid #e5e7eb",
-                      marginTop: "12px",
-                      paddingTop: "12px",
                       display: "flex",
                       justifyContent: "space-between",
                       fontSize: "1.1rem",
                       fontWeight: 800,
                       color: "#111827",
+                      marginBottom: "12px",
                     }}
                   >
-                    <span>Total</span>
-                    <span>{totalKgs} kg</span>
+                    <span>Size</span>
+                    <span>{selectedComboSize} kg</span>
+                  </div>
+                  <div style={{ fontSize: "0.85rem", color: "#374151" }}>
+                    <div style={{ fontWeight: 600, marginBottom: "6px" }}>Selected Varieties:</div>
+                    {selectedMangoes.map((m, idx) => (
+                      <div key={m.mangoId} style={{ marginBottom: "4px" }}>
+                        {idx + 1}. {m.mangoName}
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -433,17 +453,18 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
               {/* Order Button */}
               <button
                 onClick={handleOrderCombo}
-                disabled={selections.length === 0}
+                disabled={!selectedComboSize || selectedMangoes.length === 0}
                 style={{
                   width: "100%",
                   padding: "16px",
                   borderRadius: "12px",
                   border: "none",
-                  background: selections.length === 0 ? "#d1d5db" : "#25D366",
+                  background:
+                    !selectedComboSize || selectedMangoes.length === 0 ? "#d1d5db" : "var(--primary)",
                   color: "#ffffff",
                   fontSize: "1.05rem",
                   fontWeight: 700,
-                  cursor: selections.length === 0 ? "not-allowed" : "pointer",
+                  cursor: !selectedComboSize || selectedMangoes.length === 0 ? "not-allowed" : "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -451,14 +472,14 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                   transition: "all 0.2s ease",
                 }}
                 onMouseOver={(e) => {
-                  if (selections.length > 0) {
-                    e.currentTarget.style.background = "#20BA5A";
+                  if (selectedComboSize && selectedMangoes.length > 0) {
+                    e.currentTarget.style.background = "#E07C00";
                     e.currentTarget.style.transform = "translateY(-2px)";
                   }
                 }}
                 onMouseOut={(e) => {
-                  if (selections.length > 0) {
-                    e.currentTarget.style.background = "#25D366";
+                  if (selectedComboSize && selectedMangoes.length > 0) {
+                    e.currentTarget.style.background = "var(--primary)";
                     e.currentTarget.style.transform = "translateY(0)";
                   }
                 }}
