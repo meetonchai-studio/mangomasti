@@ -12,8 +12,6 @@ const exploreLinks = [
   { href: "/about", label: "About Us" },
 ];
 
-const legalLinks: { href: string; label: string }[] = [];
-
 const allMobileLinks = [
   { href: "/varieties", label: "Our Mangoes" },
   { href: "/reviews", label: "Reviews" },
@@ -53,7 +51,7 @@ export default function Footer() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "2fr 1fr 1fr 1fr",
+              gridTemplateColumns: "2fr 1fr 1fr",
               gap: "48px",
             }}
           >
@@ -102,16 +100,6 @@ export default function Footer() {
               </h4>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
                 {exploreLinks.map((l) => <li key={l.href}><FooterLink {...l} /></li>)}
-              </ul>
-            </div>
-
-            {/* LEGAL */}
-            <div>
-              <h4 style={{ fontFamily: "var(--font-jakarta,'Plus Jakarta Sans'),sans-serif", fontWeight: 700, fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--on-surface-variant)", marginBottom: "20px", opacity: 0.7 }}>
-                Legal
-              </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-                {legalLinks.map((l) => <li key={l.href}><FooterLink {...l} /></li>)}
               </ul>
             </div>
           </div>
