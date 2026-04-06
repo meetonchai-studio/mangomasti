@@ -64,16 +64,21 @@ export default async function AboutPage() {
                   {content.heroHeading.split("'s")[1]}
                 </span>
               </h1>
-              <p
-                style={{
-                  fontSize: "1rem",
-                  color: "var(--on-surface-variant)",
-                  lineHeight: 1.8,
-                  maxWidth: "460px",
-                }}
-              >
-                {content.heroDescription}
-              </p>
+              <div style={{ maxWidth: "460px" }}>
+                {content.heroDescription.split("\n\n").map((para, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontSize: "1rem",
+                      color: "var(--on-surface-variant)",
+                      lineHeight: 1.8,
+                      marginBottom: i < content.heroDescription.split("\n\n").length - 1 ? "16px" : 0,
+                    }}
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
             </div>
 
             {/* Right: dark card with vertical mango image */}
@@ -137,16 +142,21 @@ export default async function AboutPage() {
                   marginBottom: "28px",
                 }}
               />
-              <p
-                style={{
-                  fontSize: "0.97rem",
-                  color: "var(--on-surface-variant)",
-                  lineHeight: 1.8,
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {content.whoDescription}
-              </p>
+              <div>
+                {content.whoDescription.split("\n\n").map((para, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontSize: "0.97rem",
+                      color: "var(--on-surface-variant)",
+                      lineHeight: 1.8,
+                      marginBottom: i < content.whoDescription.split("\n\n").length - 1 ? "16px" : 0,
+                    }}
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
             </div>
 
             {/* Right: 2×2 image + stat grid */}
