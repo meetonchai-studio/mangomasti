@@ -134,32 +134,57 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Hamburger */}
-          <button
-            onClick={() => setMenuOpen(true)}
-            style={{
-              display: "none",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "8px",
-              color: "var(--on-surface)",
-              flexDirection: "column",
-              gap: "5px",
-            }}
-            aria-label="Open menu"
-            id="hamburger-btn"
+          {/* Mobile: Our Mangoes link + Hamburger */}
+          <div
+            style={{ display: "none", alignItems: "center", gap: "8px" }}
+            id="mobile-nav-right"
           >
-            <span style={{ display: "block", width: "24px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
-            <span style={{ display: "block", width: "18px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
-            <span style={{ display: "block", width: "24px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
-          </button>
+            <Link
+              href="/varieties"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 16px",
+                borderRadius: "9999px",
+                background: pathname === "/varieties" ? "var(--primary-container)" : "var(--surface-container-low)",
+                color: pathname === "/varieties" ? "var(--on-primary-container)" : "var(--primary)",
+                textDecoration: "none",
+                fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
+                fontWeight: 700,
+                fontSize: "0.82rem",
+                letterSpacing: "-0.01em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <IconLeaf />
+              Our Mangoes
+            </Link>
+            <button
+              onClick={() => setMenuOpen(true)}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "8px",
+                color: "var(--on-surface)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+              }}
+              aria-label="Open menu"
+            >
+              <span style={{ display: "block", width: "24px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
+              <span style={{ display: "block", width: "18px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
+              <span style={{ display: "block", width: "24px", height: "2px", background: "currentColor", borderRadius: "2px" }} />
+            </button>
+          </div>
         </div>
 
         <style>{`
           @media (max-width: 768px) {
             .desktop-nav { display: none !important; }
-            #hamburger-btn { display: flex !important; }
+            #mobile-nav-right { display: flex !important; }
           }
         `}</style>
       </nav>

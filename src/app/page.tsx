@@ -6,10 +6,7 @@ import { getApprovedReviews } from "./actions/reviews";
 import MangoCardWithModal from "./components/MangoCardWithModal";
 import ComboCard from "./components/ComboCard";
 import { buildGenericWhatsAppUrl } from "./lib/mangoes";
-import {
-  imgPremiumMangoes,
-  imgPremiumAlphonsoMangoes,
-} from "./lib/images";
+import { imgHero1 } from "./lib/images";
 
 function WhatsAppIcon({ size = 18 }: { size?: number }) {
   return (
@@ -73,8 +70,8 @@ export default async function HomePage() {
         }}
       >
         <Image
-          src={imgPremiumMangoes}
-          alt="Premium Mangoes"
+          src={imgHero1}
+          alt="Fresh mangoes hanging from tree"
           fill
           style={{ objectFit: "cover", zIndex: 0 }}
           priority
@@ -175,13 +172,13 @@ export default async function HomePage() {
           India&apos;s Finest Mangoes,{" "}
           Delivered Fresh
         </h1>
-        <div style={{ margin: "0 auto 28px", maxWidth: "300px" }}>
+        <div style={{ margin: "0 auto 28px", borderRadius: "1.5rem", overflow: "hidden" }}>
           <Image
-            src={imgPremiumAlphonsoMangoes}
-            alt="Premium Alphonso Mangoes"
-            width={300}
-            height={240}
-            style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            src={imgHero1}
+            alt="Fresh mangoes hanging from tree"
+            width={600}
+            height={400}
+            style={{ width: "100%", height: "auto", objectFit: "cover" }}
             priority
           />
         </div>
@@ -354,41 +351,56 @@ export default async function HomePage() {
       {featuredMangoes.length > 0 && (
         <section className="section" style={{ background: "var(--surface-container-low)" }}>
           <div className="container">
-            <div style={{ marginBottom: "48px" }}>
-              <div
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 800,
-                  color: "var(--primary)",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  marginBottom: "12px",
-                }}
-              >
-                THE COLLECTION
+            <div style={{ marginBottom: "48px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "16px" }}>
+              <div>
+                <div
+                  style={{
+                    fontSize: "0.72rem",
+                    fontWeight: 800,
+                    color: "var(--primary)",
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    marginBottom: "12px",
+                  }}
+                >
+                  THE COLLECTION
+                </div>
+                <h2
+                  style={{
+                    fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                    fontWeight: 800,
+                    color: "var(--on-surface)",
+                    letterSpacing: "-0.03em",
+                    marginBottom: "12px",
+                  }}
+                >
+                  Our Curated Varieties
+                </h2>
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    color: "var(--on-surface-variant)",
+                    maxWidth: "480px",
+                    lineHeight: 1.75,
+                  }}
+                >
+                  Each variety is a unique testament to India&apos;s diverse climate
+                  and soil.
+                </p>
               </div>
-              <h2
+              <Link
+                href="/varieties"
+                className="btn-outline"
                 style={{
-                  fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-                  fontWeight: 800,
-                  color: "var(--on-surface)",
-                  letterSpacing: "-0.03em",
-                  marginBottom: "12px",
+                  fontSize: "0.9rem",
+                  padding: "12px 24px",
+                  color: "var(--primary)",
+                  borderColor: "var(--primary)",
+                  whiteSpace: "nowrap",
                 }}
               >
-                Our Curated Varieties
-              </h2>
-              <p
-                style={{
-                  fontSize: "1rem",
-                  color: "var(--on-surface-variant)",
-                  maxWidth: "480px",
-                  lineHeight: 1.75,
-                }}
-              >
-                Each variety is a unique testament to India&apos;s diverse climate
-                and soil.
-              </p>
+                View All Varieties →
+              </Link>
             </div>
 
             <div className="grid-3">
