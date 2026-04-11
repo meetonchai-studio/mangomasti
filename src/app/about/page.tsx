@@ -8,6 +8,9 @@ import {
   imgAbout2,
   imgFarmerCheckingFruit,
   imgBoxesOfMangoes,
+  imgNewAbout1,
+  imgNewAbout2,
+  imgNewAbout3,
 } from "../lib/images";
 import { getAboutContent } from "../actions/about";
 
@@ -29,7 +32,7 @@ export default async function AboutPage() {
   const content = await getAboutContent();
 
   return (
-    <main style={{ paddingTop: "72px" }}>
+    <main style={{ paddingTop: "108px" }}>
 
       {/* ===== HERO SECTION ===== */}
       <section style={{ background: "var(--surface-container-low)", padding: "72px 0 56px" }}>
@@ -163,7 +166,7 @@ export default async function AboutPage() {
               />
               {/* Mobile image */}
               <Image
-                src={imgSunDrenchedOrchard}
+                src={imgNewAbout1}
                 alt="Sun-drenched mango orchard in India"
                 fill
                 style={{ objectFit: "cover", opacity: 0.9 }}
@@ -248,8 +251,8 @@ export default async function AboutPage() {
                   className="who-img1-desktop"
                 />
                 <Image
-                  src={imgFarmerCheckingFruit}
-                  alt="Farmer carefully checking mangoes"
+                  src={imgNewAbout2}
+                  alt="Mangoes ripening on the tree at golden hour"
                   fill
                   style={{ objectFit: "cover" }}
                   sizes="100vw"
@@ -357,8 +360,8 @@ export default async function AboutPage() {
                   className="who-img2-desktop"
                 />
                 <Image
-                  src={imgBoxesOfMangoes}
-                  alt="Boxes of mangoes ready for delivery"
+                  src={imgNewAbout3}
+                  alt="Lush mango orchard with healthy trees"
                   fill
                   style={{ objectFit: "cover" }}
                   sizes="100vw"

@@ -15,6 +15,9 @@ export const imgFarmerCheckingFruit    = "/Farmer checking fruit.webp";
 export const imgBoxesOfMangoes         = "/Boxes of mangoes.webp";
 export const imgAbout1                 = "/about_1.webp";
 export const imgAbout2                 = "/about_2.webp";
+export const imgNewAbout1              = "/about-1";
+export const imgNewAbout2              = "/about-2.jpeg";
+export const imgNewAbout3              = "/about-3.jpeg";
 
 // ── Alphonso ────────────────────────────────────────────────────────────────
 export const imgAlphonso1 = "/Alphonso/Alphonso 1.webp";

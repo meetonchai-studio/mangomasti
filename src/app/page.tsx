@@ -33,7 +33,7 @@ const trustItems = [
     icon: "✅",
     iconBg: "rgba(59, 105, 52, 0.14)",
     label: "Trusted by Thousands",
-    desc: "Serving happy mango lovers since 2016.",
+    desc: "Serving happy mango lovers since 2018.",
   },
 ];
 
@@ -55,7 +55,7 @@ export default async function HomePage() {
   }));
 
   return (
-    <main style={{ paddingTop: "72px" }}>
+    <main style={{ paddingTop: "108px" }}>
 
       {/* ===== HERO — DESKTOP ===== */}
       <section
@@ -76,13 +76,12 @@ export default async function HomePage() {
           style={{ objectFit: "cover", zIndex: 0 }}
           priority
         />
-        {/* White-to-transparent overlay — text side is light, image shows through on right */}
+        {/* Dark overlay for text legibility */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to right, rgba(244,243,242,0.82) 0%, rgba(244,243,242,0.65) 35%, rgba(244,243,242,0.25) 55%, rgba(244,243,242,0) 100%)",
+            background: "linear-gradient(to right, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.38) 60%, rgba(0,0,0,0.15) 100%)",
             zIndex: 1,
           }}
         />
@@ -91,7 +90,7 @@ export default async function HomePage() {
           style={{ position: "relative", zIndex: 2, paddingTop: "60px", paddingBottom: "60px" }}
         >
           <div style={{ maxWidth: "580px" }}>
-            <div className="badge" style={{ marginBottom: "28px" }}>
+            <div className="badge" style={{ marginBottom: "28px", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", color: "#ffffff", border: "1px solid rgba(255,255,255,0.35)" }}>
               <span>🌿</span>
               <span>SEASON 2026 NOW OPEN</span>
             </div>
@@ -99,20 +98,20 @@ export default async function HomePage() {
               style={{
                 fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
                 fontWeight: 800,
-                color: "var(--on-surface)",
+                color: "#ffffff",
                 lineHeight: 1.1,
                 marginBottom: "24px",
                 letterSpacing: "-0.04em",
               }}
             >
               India&apos;s Finest{" "}
-              <span style={{ color: "var(--primary)" }}>Mangoes</span>,{" "}
+              <span style={{ color: "var(--primary-container)" }}>Mangoes</span>,{" "}
               Delivered Fresh
             </h1>
             <p
               style={{
                 fontSize: "1.05rem",
-                color: "var(--on-surface-variant)",
+                color: "rgba(255,255,255,0.85)",
                 lineHeight: 1.8,
                 marginBottom: "36px",
                 maxWidth: "460px",
@@ -139,8 +138,8 @@ export default async function HomePage() {
                 style={{
                   fontSize: "1rem",
                   padding: "14px 28px",
-                  color: "var(--on-surface)",
-                  borderColor: "var(--surface-container)",
+                  color: "#ffffff",
+                  borderColor: "rgba(255,255,255,0.5)",
                 }}
               >
                 View Varieties
@@ -154,56 +153,74 @@ export default async function HomePage() {
       <section
         className="hero-mobile"
         style={{
-          background: "var(--surface-container-low)",
-          padding: "40px 24px 36px",
-          textAlign: "center",
+          position: "relative",
+          minHeight: "88vw",
+          alignItems: "center",
+          overflow: "hidden",
         }}
       >
-        <h1
+        <Image
+          src={imgHero1}
+          alt="Fresh mangoes hanging from tree"
+          fill
+          style={{ objectFit: "cover", zIndex: 0 }}
+          priority
+        />
+        {/* Dark overlay */}
+        <div
           style={{
-            fontSize: "2rem",
-            fontWeight: 800,
-            color: "var(--on-surface)",
-            lineHeight: 1.2,
-            marginBottom: "28px",
-            letterSpacing: "-0.03em",
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.18) 100%)",
+            zIndex: 1,
           }}
-        >
-          India&apos;s Finest Mangoes,{" "}
-          Delivered Fresh
-        </h1>
-        <div style={{ margin: "0 auto 28px", borderRadius: "1.5rem", overflow: "hidden" }}>
-          <Image
-            src={imgHero1}
-            alt="Fresh mangoes hanging from tree"
-            width={600}
-            height={400}
-            style={{ width: "100%", height: "auto", objectFit: "cover" }}
-            priority
-          />
-        </div>
-        <a
-          href={buildGenericWhatsAppUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
+        />
+        <div
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            background: "var(--inverse-surface)",
-            color: "#ffffff",
-            borderRadius: "9999px",
-            padding: "14px 24px",
-            fontSize: "0.95rem",
-            fontWeight: 700,
-            textDecoration: "none",
+            position: "relative",
+            zIndex: 2,
+            padding: "40px 24px 44px",
             width: "100%",
+            textAlign: "center",
           }}
         >
-          <WhatsAppIcon size={18} />
-          Order Now on WhatsApp
-        </a>
+          <div className="badge" style={{ marginBottom: "20px", justifyContent: "center", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", color: "#ffffff", border: "1px solid rgba(255,255,255,0.35)" }}>
+            <span>🌿</span>
+            <span>SEASON 2026 NOW OPEN</span>
+          </div>
+          <h1
+            style={{
+              fontSize: "2rem",
+              fontWeight: 800,
+              color: "#ffffff",
+              lineHeight: 1.2,
+              marginBottom: "16px",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            India&apos;s Finest <span style={{ color: "var(--primary-container)" }}>Mangoes</span>, Delivered Fresh
+          </h1>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "rgba(255,255,255,0.85)",
+              lineHeight: 1.75,
+              marginBottom: "28px",
+            }}
+          >
+            Hand-picked from India&apos;s finest orchards, delivered to your doorstep within 48 hours.
+          </p>
+          <a
+            href={buildGenericWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ fontSize: "0.95rem", padding: "13px 28px" }}
+          >
+            <WhatsAppIcon size={18} />
+            Order Now on WhatsApp
+          </a>
+        </div>
       </section>
 
       {/* ===== TRUST SECTION ===== */}
@@ -384,8 +401,7 @@ export default async function HomePage() {
                     lineHeight: 1.75,
                   }}
                 >
-                  Each variety is a unique testament to India&apos;s diverse climate
-                  and soil.
+                  Fresh, Handpicked Mangoes at Prices Better Than the Market. Straight from the farms to your doorstep.
                 </p>
               </div>
               <Link
@@ -496,7 +512,7 @@ export default async function HomePage() {
         /* ── Mobile overrides (≤ 640px) ─────────────────────────────── */
         @media (max-width: 640px) {
           .hero-desktop  { display: none !important; }
-          .hero-mobile   { display: block; }
+          .hero-mobile   { display: flex; }
 
           .trust-desktop { display: none !important; }
           .trust-mobile  { display: block; }

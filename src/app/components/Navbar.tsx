@@ -72,7 +72,7 @@ export default function Navbar() {
       <nav
         style={{
           position: "fixed",
-          top: 0,
+          top: "36px",
           left: 0,
           right: 0,
           zIndex: 500,

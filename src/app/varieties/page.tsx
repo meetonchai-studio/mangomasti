@@ -11,7 +11,7 @@ export default async function VarietiesPage() {
   const config = await getConfig();
 
   return (
-    <main style={{ paddingTop: "72px" }}>
+    <main style={{ paddingTop: "108px" }}>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section
         style={{

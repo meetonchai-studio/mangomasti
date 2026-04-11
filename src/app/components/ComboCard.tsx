@@ -13,9 +13,11 @@ interface MangoSelection {
 }
 
 const COMBO_SIZES = [
-  { value: 1, label: "1 kg Combo", price: "Best for trying" },
-  { value: 2, label: "2 kg Combo", price: "Popular choice" },
-  { value: 5, label: "5 kg Combo", price: "Best value" },
+  { value: 2,   label: "2 kg Combo",   price: "Best for trying" },
+  { value: 3,   label: "3 kg Combo",   price: "Great starter" },
+  { value: 5,   label: "5 kg Combo",   price: "Popular choice" },
+  { value: 7,   label: "7 kg Combo",   price: "Family pack" },
+  { value: 10,  label: "10+ kg Combo", price: "Best value" },
 ];
 
 export default function ComboCard({ allMangoes }: ComboCardProps) {
@@ -49,7 +51,8 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
     }
 
     const varietyList = selectedMangoes.map((m) => `• ${m.mangoName}`).join("\n");
-    const message = `Hi! I'd like to order a *${selectedComboSize}kg Mango Combo*:\n\n${varietyList}\n\n*Total: ${selectedComboSize}kg* (mixed varieties)`;
+    const sizeLabel = selectedComboSize === 10 ? "10+ kg" : `${selectedComboSize}kg`;
+    const message = `Hi! I'd like to order a *${sizeLabel} Mango Combo*:\n\n${varietyList}\n\n*Total: ${sizeLabel}* (mixed varieties)`;
 
     window.open(
       `https://wa.me/917977740596?text=${encodeURIComponent(message)}`,
@@ -319,7 +322,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                           marginBottom: "4px",
                         }}
                       >
-                        {combo.value} kg
+                        {combo.value === 10 ? "10+" : combo.value} kg
                       </div>
                       <div style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 600 }}>
                         {combo.price}
@@ -374,13 +377,9 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                               fontSize: "0.95rem",
                               fontWeight: 700,
                               color: "#111827",
-                              marginBottom: "2px",
                             }}
                           >
                             {mango.name}
-                          </div>
-                          <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
-                            ₹{(mango.discountedPrice / 100).toFixed(2)}/kg
                           </div>
                         </div>
                         <div
@@ -437,7 +436,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                     }}
                   >
                     <span>Size</span>
-                    <span>{selectedComboSize} kg</span>
+                    <span>{selectedComboSize === 10 ? "10+ kg" : `${selectedComboSize} kg`}</span>
                   </div>
                   <div style={{ fontSize: "0.85rem", color: "#374151" }}>
                     <div style={{ fontWeight: 600, marginBottom: "6px" }}>Selected Varieties:</div>

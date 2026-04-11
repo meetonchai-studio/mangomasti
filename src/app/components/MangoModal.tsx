@@ -382,37 +382,50 @@ export default function MangoModal({ mango, isOpen, onClose, config = {} }: Mang
           )}
 
           {/* Pricing */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              marginBottom: "24px",
-            }}
-          >
-            {showOriginalPrice && mango.originalPrice && (
-              <span
-                style={{
-                  fontSize: "1.25rem",
-                  color: "var(--on-surface-variant)",
-                  textDecoration: "line-through",
-                }}
-              >
-                {formatPrice(mango.originalPrice)}
-              </span>
-            )}
-            {showDiscountedPrice && (
-              <span
-                style={{
-                  fontSize: "2rem",
-                  fontWeight: 800,
-                  color: "var(--primary)",
-                }}
-              >
-                {formatPrice(mango.discountedPrice)}
-              </span>
-            )}
-          </div>
+          {(showDiscountedPrice || showOriginalPrice) && (
+            <div style={{ marginBottom: "24px" }}>
+              {showDiscountedPrice && (
+                <div
+                  style={{
+                    fontSize: "2.2rem",
+                    fontWeight: 800,
+                    color: "var(--primary)",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {formatPrice(mango.discountedPrice)}
+                </div>
+              )}
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "6px" }}>
+                {showOriginalPrice && mango.originalPrice && (
+                  <span
+                    style={{
+                      fontSize: "1rem",
+                      color: "var(--on-surface-variant)",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    {formatPrice(mango.originalPrice)}
+                  </span>
+                )}
+                {showOriginalPrice && mango.originalPrice && showDiscountedPrice && (
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      fontWeight: 800,
+                      color: "#fff",
+                      background: "var(--secondary)",
+                      borderRadius: "9999px",
+                      padding: "3px 10px",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {Math.round((1 - mango.discountedPrice / mango.originalPrice) * 100)}% OFF
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* WhatsApp CTA */}
           <a

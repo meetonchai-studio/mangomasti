@@ -14,9 +14,13 @@ export const metadata: Metadata = {
 export default async function ReviewsPage() {
   const { data: dbReviews, error } = await getApprovedReviews();
   const allReviews = dbReviews || [];
+  const reviewCount = allReviews.length;
+  const avgRating = reviewCount > 0
+    ? (allReviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount).toFixed(1)
+    : "—";
 
   return (
-    <main style={{ paddingTop: "72px", background: "var(--surface-container-low)", minHeight: "100vh" }}>
+    <main style={{ paddingTop: "108px", background: "var(--surface-container-low)", minHeight: "100vh" }}>
       <div className="container" style={{ paddingTop: "64px", paddingBottom: "96px" }}>
         <div
           className="reviews-layout"
@@ -70,7 +74,7 @@ export default async function ReviewsPage() {
                 marginBottom: "32px",
               }}
             >
-              From the sun-drenched orchards of Ratnagiri to your doorstep, our mangoes tell a story of sweetness, quality, and legacy.
+              Hear it from our happy customers.
             </p>
 
             {/* Review Form */}
@@ -103,7 +107,7 @@ export default async function ReviewsPage() {
                     fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
                   }}
                 >
-                  4.9
+                  {avgRating}
                 </div>
                 <div
                   style={{
@@ -138,7 +142,7 @@ export default async function ReviewsPage() {
                     fontFamily: "var(--font-jakarta, 'Plus Jakarta Sans'), sans-serif",
                   }}
                 >
-                  2,840+
+                  {reviewCount.toLocaleString()}
                 </div>
               </div>
             </div>

@@ -118,37 +118,50 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
           )}
 
           {/* Pricing */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              marginBottom: "16px",
-            }}
-          >
-            {showOriginalPrice && mango.originalPrice && (
-              <span
-                style={{
-                  fontSize: "1rem",
-                  color: "var(--on-surface-variant)",
-                  textDecoration: "line-through",
-                }}
-              >
-                {formatPrice(mango.originalPrice)}
-              </span>
-            )}
-            {showDiscountedPrice && (
-              <span
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: 800,
-                  color: "var(--primary)",
-                }}
-              >
-                {formatPrice(mango.discountedPrice)}
-              </span>
-            )}
-          </div>
+          {(showDiscountedPrice || showOriginalPrice) && (
+            <div style={{ marginBottom: "16px" }}>
+              {showDiscountedPrice && (
+                <div
+                  style={{
+                    fontSize: "1.6rem",
+                    fontWeight: 800,
+                    color: "var(--primary)",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {formatPrice(mango.discountedPrice)}
+                </div>
+              )}
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+                {showOriginalPrice && mango.originalPrice && (
+                  <span
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "var(--on-surface-variant)",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    {formatPrice(mango.originalPrice)}
+                  </span>
+                )}
+                {showOriginalPrice && mango.originalPrice && showDiscountedPrice && (
+                  <span
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 800,
+                      color: "#fff",
+                      background: "var(--secondary)",
+                      borderRadius: "9999px",
+                      padding: "2px 8px",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {Math.round((1 - mango.discountedPrice / mango.originalPrice) * 100)}% OFF
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Action Buttons */}
           <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
