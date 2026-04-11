@@ -117,8 +117,8 @@ export async function createMango(formData: FormData): Promise<{ success: boolea
     const origin = formData.get("origin") as string;
     const taste = formData.get("taste") as string;
     const featured = formData.get("featured") === "true";
-    const originalPrice = formData.get("originalPrice") ? parseInt(formData.get("originalPrice") as string) : null;
     const discountedPrice = parseInt(formData.get("discountedPrice") as string);
+    const originalPrice = Math.round(discountedPrice / 0.8); // auto 20% off
     const tags = formData.get("tags") as string;
 
     // Validate required fields
@@ -203,8 +203,8 @@ export async function updateMango(
     const origin = formData.get("origin") as string;
     const taste = formData.get("taste") as string;
     const featured = formData.get("featured") === "true";
-    const originalPrice = formData.get("originalPrice") ? parseInt(formData.get("originalPrice") as string) : null;
     const discountedPrice = parseInt(formData.get("discountedPrice") as string);
+    const originalPrice = Math.round(discountedPrice / 0.8); // auto 20% off
     const tags = formData.get("tags") as string;
     const existingImagesJson = formData.get("existingImages") as string;
 

@@ -27,6 +27,11 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
 
   const maxVarieties = COMBO_SIZES.find((c) => c.value === selectedComboSize)?.maxVarieties ?? 99;
 
+  const handleSizeChange = (size: number) => {
+    setSelectedComboSize(size);
+    setSelectedMangoes([]); // reset selections when size changes
+  };
+
   const toggleMangoSelection = (mango: Mango) => {
     const isSelected = selectedMangoes.some((m) => m.mangoId === mango.id);
 
@@ -306,7 +311,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                   {COMBO_SIZES.map((combo) => (
                     <button
                       key={combo.value}
-                      onClick={() => setSelectedComboSize(combo.value)}
+                      onClick={() => handleSizeChange(combo.value)}
                       style={{
                         padding: "20px 16px",
                         borderRadius: "12px",

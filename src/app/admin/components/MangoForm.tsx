@@ -36,8 +36,7 @@ export default function MangoForm({ mango }: MangoFormProps) {
     taste: mango?.taste || "",
     tags: mango?.tags?.join(", ") || "",
     featured: mango?.featured || false,
-    originalPrice: mango?.originalPrice ? (mango.originalPrice / 100).toFixed(2) : "",
-    discountedPrice: mango?.discountedPrice ? (mango.discountedPrice / 100).toFixed(2) : "",
+    discountedPrice: mango?.discountedPrice ? (mango.discountedPrice / 100).toFixed(0) : "",
   });
 
   // Existing images (base64 strings)
@@ -101,10 +100,6 @@ export default function MangoForm({ mango }: MangoFormProps) {
       formDataToSend.append("taste", formData.taste);
       formDataToSend.append("tags", formData.tags);
       formDataToSend.append("featured", String(formData.featured));
-      formDataToSend.append(
-        "originalPrice",
-        formData.originalPrice ? String(Math.round(parseFloat(formData.originalPrice) * 100)) : ""
-      );
       formDataToSend.append("discountedPrice", String(Math.round(parseFloat(formData.discountedPrice) * 100)));
 
       // Send existing images as JSON
@@ -516,85 +511,49 @@ export default function MangoForm({ mango }: MangoFormProps) {
               Pricing
             </h3>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    color: "#374151",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Original Price (₹)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.originalPrice}
-                  onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
-                  placeholder="199.00"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "1px solid #d1d5db",
-                    borderRadius: "8px",
-                    fontSize: "0.95rem",
-                    outline: "none",
-                    transition: "all 0.2s ease",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "var(--primary)";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(253, 139, 0, 0.1)";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "#d1d5db";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                />
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    color: "#374151",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Discounted Price (₹) <span style={{ color: "#ef4444" }}>*</span>
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  required
-                  value={formData.discountedPrice}
-                  onChange={(e) => setFormData({ ...formData, discountedPrice: e.target.value })}
-                  placeholder="149.00"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "1px solid #d1d5db",
-                    borderRadius: "8px",
-                    fontSize: "0.95rem",
-                    outline: "none",
-                    transition: "all 0.2s ease",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "var(--primary)";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(253, 139, 0, 0.1)";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "#d1d5db";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                />
-              </div>
+            <div style={{ maxWidth: "320px" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#374151",
+                  marginBottom: "8px",
+                }}
+              >
+                Your Price per kg (₹) <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <input
+                type="number"
+                step="1"
+                min="0"
+                required
+                value={formData.discountedPrice}
+                onChange={(e) => setFormData({ ...formData, discountedPrice: e.target.value })}
+                placeholder="e.g. 150"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "1px solid #d1d5db",
+                  borderRadius: "8px",
+                  fontSize: "0.95rem",
+                  outline: "none",
+                  transition: "all 0.2s ease",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = "var(--primary)";
+                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(253, 139, 0, 0.1)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "#d1d5db";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              />
+              {formData.discountedPrice && (
+                <p style={{ fontSize: "0.8rem", color: "#6b7280", marginTop: "8px" }}>
+                  Will show as <strong>₹{formData.discountedPrice}/kg</strong> with original <strong>₹{Math.round(parseFloat(formData.discountedPrice) / 0.8)}</strong> struck through (20% OFF)
+                </p>
+              )}
             </div>
           </div>
 

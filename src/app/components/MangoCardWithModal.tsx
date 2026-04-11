@@ -13,14 +13,13 @@ interface MangoCardWithModalProps {
 export default function MangoCardWithModal({ mango, config = {} }: MangoCardWithModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Format price in rupees
-  const formatPrice = (paise: number) => {
-    return `₹${(paise / 100).toFixed(2)}`;
-  };
+  // Format price in rupees (no decimals)
+  const formatPrice = (paise: number) => `₹${Math.round(paise / 100)}`;
 
-  // Parse config values
-  const showOriginalPrice = config.show_original_price === "true";
-  const showDiscountedPrice = config.show_discounted_price === "true";
+  // Auto-calculate original price as discountedPrice / 0.8 (i.e. 20% off)
+  const discountedPaise = mango.discountedPrice;
+  const originalPaise = Math.round(discountedPaise / 0.8);
+
   const showTags = config.show_tags === "true";
 
   return (
@@ -117,51 +116,23 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
             </div>
           )}
 
-          {/* Pricing */}
-          {(showDiscountedPrice || showOriginalPrice) && (
-            <div style={{ marginBottom: "16px" }}>
-              {showDiscountedPrice && (
-                <div
-                  style={{
-                    fontSize: "1.6rem",
-                    fontWeight: 800,
-                    color: "var(--primary)",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {formatPrice(mango.discountedPrice)}
-                </div>
-              )}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
-                {showOriginalPrice && mango.originalPrice && (
-                  <span
-                    style={{
-                      fontSize: "0.9rem",
-                      color: "var(--on-surface-variant)",
-                      textDecoration: "line-through",
-                    }}
-                  >
-                    {formatPrice(mango.originalPrice)}
-                  </span>
-                )}
-                {showOriginalPrice && mango.originalPrice && showDiscountedPrice && (
-                  <span
-                    style={{
-                      fontSize: "0.72rem",
-                      fontWeight: 800,
-                      color: "#fff",
-                      background: "var(--secondary)",
-                      borderRadius: "9999px",
-                      padding: "2px 8px",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {Math.round((1 - mango.discountedPrice / mango.originalPrice) * 100)}% OFF
-                  </span>
-                )}
-              </div>
+          {/* Pricing — always shown, 20% OFF auto-calculated */}
+          <div style={{ marginBottom: "16px" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+              <span style={{ fontSize: "1.6rem", fontWeight: 800, color: "var(--primary)", lineHeight: 1.1 }}>
+                {formatPrice(discountedPaise)}
+              </span>
+              <span style={{ fontSize: "0.78rem", color: "var(--on-surface-variant)", fontWeight: 600 }}>/kg</span>
             </div>
-          )}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+              <span style={{ fontSize: "0.9rem", color: "var(--on-surface-variant)", textDecoration: "line-through" }}>
+                {formatPrice(originalPaise)}
+              </span>
+              <span style={{ fontSize: "0.72rem", fontWeight: 800, color: "#fff", background: "var(--secondary)", borderRadius: "9999px", padding: "2px 8px", letterSpacing: "0.04em" }}>
+                20% OFF
+              </span>
+            </div>
+          </div>
 
           {/* Action Buttons */}
           <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
