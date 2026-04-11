@@ -83,12 +83,11 @@ export default function ReviewForm() {
 
         {/* Review Title */}
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="review-title" style={labelStyle}>Review Title *</label>
+          <label htmlFor="review-title" style={labelStyle}>Review Title</label>
           <input
             type="text"
             id="review-title"
             name="title"
-            required
             placeholder="e.g. Best Alphonso I've ever tasted!"
             style={inputStyle}
             onFocus={(e) => { (e.target as HTMLInputElement).style.boxShadow = focusStyle; }}

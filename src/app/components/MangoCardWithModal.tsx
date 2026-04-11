@@ -169,7 +169,7 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
               onClick={(e) => {
                 e.stopPropagation();
                 const message = `Hi! I'd like to order *${mango.name}* mangoes.\n\nPrice: ${formatPrice(mango.discountedPrice)}/kg`;
-                window.open(`https://wa.me/917977740596?text=${encodeURIComponent(message)}`, "_blank");
+                window.open(`https://wa.me/919391956095?text=${encodeURIComponent(message)}`, "_blank");
               }}
               style={{
                 flex: 1,

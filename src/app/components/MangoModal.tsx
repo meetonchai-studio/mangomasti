@@ -429,7 +429,7 @@ export default function MangoModal({ mango, isOpen, onClose, config = {} }: Mang
 
           {/* WhatsApp CTA */}
           <a
-            href={`https://wa.me/919326113359?text=Hi,%20I%20would%20like%20to%20order%20${encodeURIComponent(mango.name)}`}
+            href={`https://wa.me/919391956095?text=Hi,%20I%20would%20like%20to%20order%20${encodeURIComponent(mango.name)}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{

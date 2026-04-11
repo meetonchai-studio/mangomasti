@@ -13,11 +13,11 @@ interface MangoSelection {
 }
 
 const COMBO_SIZES = [
-  { value: 2,   label: "2 kg Combo",   price: "Best for trying" },
-  { value: 3,   label: "3 kg Combo",   price: "Great starter" },
-  { value: 5,   label: "5 kg Combo",   price: "Popular choice" },
-  { value: 7,   label: "7 kg Combo",   price: "Family pack" },
-  { value: 10,  label: "10+ kg Combo", price: "Best value" },
+  { value: 2,   label: "2 kg Combo",   price: "Best for trying",  maxVarieties: 3 },
+  { value: 3,   label: "3 kg Combo",   price: "Great starter",    maxVarieties: 4 },
+  { value: 5,   label: "5 kg Combo",   price: "Popular choice",   maxVarieties: 5 },
+  { value: 7,   label: "7 kg Combo",   price: "Family pack",      maxVarieties: 6 },
+  { value: 10,  label: "10+ kg Combo", price: "Best value",       maxVarieties: 99 },
 ];
 
 export default function ComboCard({ allMangoes }: ComboCardProps) {
@@ -25,12 +25,15 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
   const [selectedComboSize, setSelectedComboSize] = useState<number | null>(null);
   const [selectedMangoes, setSelectedMangoes] = useState<MangoSelection[]>([]);
 
+  const maxVarieties = COMBO_SIZES.find((c) => c.value === selectedComboSize)?.maxVarieties ?? 99;
+
   const toggleMangoSelection = (mango: Mango) => {
     const isSelected = selectedMangoes.some((m) => m.mangoId === mango.id);
 
     if (isSelected) {
       setSelectedMangoes(selectedMangoes.filter((m) => m.mangoId !== mango.id));
     } else {
+      if (selectedMangoes.length >= maxVarieties) return;
       setSelectedMangoes([...selectedMangoes, { mangoId: mango.id, mangoName: mango.name }]);
     }
   };
@@ -55,7 +58,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
     const message = `Hi! I'd like to order a *${sizeLabel} Mango Combo*:\n\n${varietyList}\n\n*Total: ${sizeLabel}* (mixed varieties)`;
 
     window.open(
-      `https://wa.me/917977740596?text=${encodeURIComponent(message)}`,
+      `https://wa.me/919391956095?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };
@@ -342,7 +345,7 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                     marginBottom: "16px",
                   }}
                 >
-                  Step 2: Select Mango Varieties
+                  Step 2: Select Mango Varieties {selectedComboSize ? `(up to ${maxVarieties}, ${selectedMangoes.length} selected)` : ""}
                 </h3>
                 <div
                   style={{
@@ -353,11 +356,12 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                 >
                   {allMangoes.map((mango) => {
                     const isSelected = isMangoSelected(mango.id);
+                    const isAtLimit = !isSelected && selectedMangoes.length >= maxVarieties;
                     return (
                       <button
                         key={mango.id}
                         onClick={() => selectedComboSize && toggleMangoSelection(mango)}
-                        disabled={!selectedComboSize}
+                        disabled={!selectedComboSize || isAtLimit}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -366,7 +370,8 @@ export default function ComboCard({ allMangoes }: ComboCardProps) {
                           background: isSelected ? "#fff7ed" : "#f9fafb",
                           borderRadius: "12px",
                           border: isSelected ? "2px solid #FF6B35" : "1px solid #e5e7eb",
-                          cursor: selectedComboSize ? "pointer" : "not-allowed",
+                          cursor: (!selectedComboSize || isAtLimit) ? "not-allowed" : "pointer",
+                          opacity: isAtLimit ? 0.45 : 1,
                           transition: "all 0.2s ease",
                           textAlign: "left",
                         }}

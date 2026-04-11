@@ -217,7 +217,7 @@ export const mangoes: Mango[] = [
   },
 ];
 
-export const WHATSAPP_NUMBER = "919347325653"; // Format: country code + number without +
+export const WHATSAPP_NUMBER = "919391956095"; // Format: country code + number without +
 
 export function buildWhatsAppUrl(mango: Mango): string {
   const msg = encodeURIComponent(

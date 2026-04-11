@@ -112,7 +112,7 @@ export async function submitReview(formData: FormData) {
   const title = formData.get("title") as string;
   const body = formData.get("body") as string;
 
-  if (!name || !rating || !title || !body) {
+  if (!name || !rating || !body) {
     return { success: false, error: "Please fill in all required fields" };
   }
 
@@ -121,7 +121,7 @@ export async function submitReview(formData: FormData) {
     address: address || null,
     variety: variety || null,
     rating,
-    title,
+    title: title || "—",
     body,
     approved: false,
   };
