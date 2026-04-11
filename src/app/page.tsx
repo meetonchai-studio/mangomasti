@@ -232,7 +232,7 @@ export default async function HomePage() {
         }}
       >
         <div
-          className="container"
+          className="container wholesale-banner-inner"
           style={{
             display: "flex",
             alignItems: "center",
@@ -255,7 +255,7 @@ export default async function HomePage() {
             <div>
               <div
                 style={{
-                  fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
+                  fontSize: "clamp(1rem, 2.5vw, 1.6rem)",
                   fontWeight: 800,
                   color: "#ffffff",
                   letterSpacing: "-0.02em",
@@ -267,7 +267,7 @@ export default async function HomePage() {
               </div>
               <div
                 style={{
-                  fontSize: "0.88rem",
+                  fontSize: "clamp(0.88rem, 1.5vw, 1.05rem)",
                   color: "rgba(241,240,240,0.72)",
                   lineHeight: 1.5,
                 }}
@@ -280,6 +280,7 @@ export default async function HomePage() {
             href={buildGenericWhatsAppUrl()}
             target="_blank"
             rel="noopener noreferrer"
+            className="wholesale-banner-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -291,7 +292,6 @@ export default async function HomePage() {
               fontSize: "0.9rem",
               fontWeight: 800,
               textDecoration: "none",
-              whiteSpace: "nowrap",
               flexShrink: 0,
               letterSpacing: "0.01em",
             }}
