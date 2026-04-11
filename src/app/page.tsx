@@ -242,7 +242,7 @@ export default async function HomePage() {
             flexWrap: "wrap",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: "1 1 260px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: "1 1 auto", minWidth: 0 }}>
             <div
               style={{
                 fontSize: "2.2rem",
