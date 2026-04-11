@@ -223,6 +223,85 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ===== WHOLESALE BANNER ===== */}
+      <section
+        style={{
+          background: "var(--inverse-surface)",
+          padding: "0",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "24px",
+            padding: "28px 24px",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: "1 1 260px" }}>
+            <div
+              style={{
+                fontSize: "2.2rem",
+                lineHeight: 1,
+                flexShrink: 0,
+              }}
+            >
+              🇸🇬
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
+                  fontWeight: 800,
+                  color: "var(--inverse-on-surface)",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.2,
+                  marginBottom: "4px",
+                }}
+              >
+                Wholesale Mangoes Delivered Across Singapore
+              </div>
+              <div
+                style={{
+                  fontSize: "0.88rem",
+                  color: "rgba(241,240,240,0.72)",
+                  lineHeight: 1.5,
+                }}
+              >
+                Bulk orders available with direct-from-farm pricing.
+              </div>
+            </div>
+          </div>
+          <a
+            href={buildGenericWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "var(--primary-container)",
+              color: "var(--on-primary-container)",
+              borderRadius: "9999px",
+              padding: "12px 24px",
+              fontSize: "0.9rem",
+              fontWeight: 800,
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+              letterSpacing: "0.01em",
+            }}
+          >
+            <span>Enquire on WhatsApp</span>
+            <span style={{ fontSize: "1.1rem" }}>→</span>
+          </a>
+        </div>
+      </section>
+
       {/* ===== TRUST SECTION ===== */}
       <section className="section" style={{ background: "var(--surface-container-lowest)" }}>
         <div className="container">
