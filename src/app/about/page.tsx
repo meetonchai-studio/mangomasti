@@ -168,7 +168,7 @@ export default async function AboutPage() {
                 fill
                 style={{ objectFit: "cover", opacity: 0.9 }}
                 sizes="100vw"
-                priority
+                loading="lazy"
                 className="about-hero-img-mobile"
               />
             </div>

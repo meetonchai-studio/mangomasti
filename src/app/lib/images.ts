@@ -7,7 +7,7 @@
 
 // ── Root ────────────────────────────────────────────────────────────────────
 export const imgLogo                   = "/logo.webp";
-export const imgHero1                  = "/hero-1.jpeg";
+export const imgHero1                  = "/hero-1.webp";
 export const imgPremiumMangoes         = "/Premium Mangoes (1).webp";
 export const imgPremiumAlphonsoMangoes = "/Premium Alphonso Mangoes (1).webp";
 export const imgSunDrenchedOrchard     = "/Sun-drenched mango orchard.webp";

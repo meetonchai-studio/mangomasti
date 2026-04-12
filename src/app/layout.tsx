@@ -4,6 +4,7 @@ import "./globals.css";
 import { imgLogo } from "./lib/images";
 import ConditionalNav from "./components/ConditionalNav";
 import ConditionalFooter from "./components/ConditionalFooter";
+import NavigationProgress from "./components/NavigationProgress";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",
@@ -40,8 +41,10 @@ export default function RootLayout({
     <html lang="en" className={urbanist.variable} style={{ colorScheme: "light" }}>
       <head>
         <meta name="color-scheme" content="light" />
+        <link rel="preload" as="image" href="/hero-1.webp" fetchPriority="high" />
       </head>
       <body>
+        <NavigationProgress />
         <ConditionalNav />
         {children}
         <ConditionalFooter />

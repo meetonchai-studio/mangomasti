@@ -73,6 +73,7 @@ export default async function HomePage() {
           src={imgHero1}
           alt="Fresh mangoes hanging from tree"
           fill
+          sizes="100vw"
           style={{ objectFit: "cover", zIndex: 0 }}
           priority
         />
@@ -163,8 +164,9 @@ export default async function HomePage() {
           src={imgHero1}
           alt="Fresh mangoes hanging from tree"
           fill
+          sizes="100vw"
           style={{ objectFit: "cover", zIndex: 0 }}
-          priority
+          loading="lazy"
         />
         {/* Dark overlay */}
         <div
