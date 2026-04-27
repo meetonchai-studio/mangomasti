@@ -27,12 +27,14 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
       <article className="mango-card">
         {/* Image */}
         <div
+          onClick={() => setIsModalOpen(true)}
           style={{
             position: "relative",
             height: "220px",
             overflow: "hidden",
             borderRadius: "2rem 2rem 0 0",
             background: "var(--surface-container)",
+            cursor: "pointer",
           }}
         >
           <Image

@@ -225,82 +225,85 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===== WHOLESALE BANNER ===== */}
-      <section
-        style={{
-          background: "var(--primary)",
-          padding: "0",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          className="container wholesale-banner-inner"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "24px",
-            padding: "28px 24px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", flex: "1 1 auto", minWidth: 0 }}>
-            <div
-              style={{
-                fontSize: "2.2rem",
-                lineHeight: 1,
-                flexShrink: 0,
-              }}
-            >
-              🇸🇬
-            </div>
-            <div>
+      {/* ===== SHIPPING HIGHLIGHTS ===== */}
+      <section style={{ background: "var(--surface-container-lowest)", paddingTop: "48px", paddingBottom: "8px" }}>
+        <div className="container">
+          <div className="shipping-grid">
+            {[
+              {
+                icon: "🌍",
+                title: "Worldwide Bulk Orders",
+                desc: "Bulk orders available for delivery all over the world.",
+                bg: "rgba(122, 89, 0, 0.08)",
+                accent: "var(--primary)",
+              },
+              {
+                icon: "🇸🇬",
+                title: "Door Delivery — Singapore",
+                desc: "Fresh mangoes delivered right to your doorstep in Singapore.",
+                bg: "rgba(59, 105, 52, 0.08)",
+                accent: "var(--tertiary)",
+              },
+              {
+                icon: "🇮🇳",
+                title: "Wholesale Prices — India",
+                desc: "Bulk orders at wholesale prices available all over India.",
+                bg: "rgba(144, 77, 0, 0.08)",
+                accent: "var(--secondary)",
+              },
+            ].map((item) => (
               <div
+                key={item.title}
+                className="shipping-card"
                 style={{
-                  fontSize: "clamp(1rem, 2.5vw, 1.6rem)",
-                  fontWeight: 800,
-                  color: "#ffffff",
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.2,
-                  marginBottom: "4px",
+                  background: "var(--surface-container-low)",
+                  borderRadius: "1.5rem",
+                  padding: "24px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "16px",
                 }}
               >
-                Wholesale Mangoes Delivered Across Singapore
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "14px",
+                    background: item.bg,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1.5rem",
+                    flexShrink: 0,
+                  }}
+                >
+                  {item.icon}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontWeight: 800,
+                      fontSize: "0.95rem",
+                      color: item.accent,
+                      marginBottom: "4px",
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {item.title}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "var(--on-surface-variant)",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {item.desc}
+                  </div>
+                </div>
               </div>
-              <div
-                style={{
-                  fontSize: "clamp(0.88rem, 1.5vw, 1.05rem)",
-                  color: "rgba(241,240,240,0.72)",
-                  lineHeight: 1.5,
-                }}
-              >
-                Bulk orders available with direct-from-farm pricing.
-              </div>
-            </div>
+            ))}
           </div>
-          <a
-            href={buildGenericWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wholesale-banner-btn"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "var(--primary-container)",
-              color: "var(--on-primary-container)",
-              borderRadius: "9999px",
-              padding: "12px 24px",
-              fontSize: "0.9rem",
-              fontWeight: 800,
-              textDecoration: "none",
-              flexShrink: 0,
-              letterSpacing: "0.01em",
-            }}
-          >
-            <span>Enquire on WhatsApp</span>
-            <span style={{ fontSize: "1.1rem" }}>→</span>
-          </a>
         </div>
       </section>
 
@@ -590,6 +593,14 @@ export default async function HomePage() {
         .hero-mobile     { display: none; }
         .trust-desktop   { display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
         .trust-mobile    { display: none; }
+
+        /* ── Shipping Grid ──────────────────────────────────────────── */
+        .shipping-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+
         /* ── Mobile overrides (≤ 640px) ─────────────────────────────── */
         @media (max-width: 640px) {
           .hero-desktop  { display: none !important; }
@@ -601,6 +612,10 @@ export default async function HomePage() {
           /* Stack the 3-col grids to 1 column */
           .grid-3 {
             grid-template-columns: 1fr !important;
+          }
+
+          .shipping-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

@@ -101,6 +101,7 @@ export default function Navbar() {
               alt="MangoMasti"
               width={140}
               height={79}
+              className="nav-logo"
               style={{ objectFit: "contain", height: "44px", width: "auto" }}
               priority
             />
@@ -185,6 +186,7 @@ export default function Navbar() {
           @media (max-width: 768px) {
             .desktop-nav { display: none !important; }
             #mobile-nav-right { display: flex !important; }
+            .nav-logo { height: 56px !important; }
           }
         `}</style>
       </nav>
