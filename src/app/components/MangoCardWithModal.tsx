@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import MangoModal from "./MangoModal";
+import ImageCarouselModal from "./ImageCarouselModal";
 import type { Mango } from "../db/schema";
 
 interface MangoCardWithModalProps {
@@ -12,6 +13,7 @@ interface MangoCardWithModalProps {
 
 export default function MangoCardWithModal({ mango, config = {} }: MangoCardWithModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   // Format price in rupees (no decimals)
   const formatPrice = (paise: number) => `₹${Math.round(paise / 100)}`;
@@ -27,7 +29,7 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
       <article className="mango-card">
         {/* Image */}
         <div
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsGalleryOpen(true)}
           style={{
             position: "relative",
             height: "220px",
@@ -204,8 +206,11 @@ export default function MangoCardWithModal({ mango, config = {} }: MangoCardWith
         </div>
       </article>
 
-      {/* Modal */}
+      {/* Detail Modal */}
       <MangoModal mango={mango} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} config={config} />
+
+      {/* Image Gallery Modal */}
+      <ImageCarouselModal images={mango.images} alt={mango.name} isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} />
     </>
   );
 }
